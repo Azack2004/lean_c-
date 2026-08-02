@@ -58,5 +58,18 @@ int main()
     //在c++中，三目运算符返回的是变量
     (b>c ? b:c)=100;
     std::cout<<b<<" ---- "<<c<<std::endl;
+
+    switch (a)
+    {
+    case 600:
+        std::cout <<"a=600"<< std::endl;
+        break;
+    case 500:
+        std::cout << "a=500" << std::endl;
+        break;
+    default:
+        std ::cout << "a不知道多少"<<std::endl;
+        break;
+    }
     return 0;
 }
