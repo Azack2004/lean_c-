@@ -1,32 +1,19 @@
-# include<iostream>
+#include<iostream>
 #include<ctime>
+#include<cmath>
 int main()
-{   int a =0;
-    while (a<10){
-        std::cout <<a<<std::endl;
-        ++a;
-    }
-    //添加随机数种子
-    srand((unsigned int)time(NULL) );
-    int num = rand()%100+1;
-    int guess = 0;
-    std::cout <<num<<std::endl;
-    while (guess!=num)
-    {
-        if (num>guess)
+{   int a =100;
+    do {
+        int b=a/100;
+        int c=(a%100)/10;
+        int d=a%10;
+        //std::cout<<b<<c<<d<<std::endl;
+        if(((std::pow(b, 3)+std::pow(c, 3)+std::pow(d, 3))==a)?a:0)
         {
-            std::cout<<"猜小了"<<std::endl;
-            std::cin>>guess;
+            std::cout<<a<<std::endl;
         }
-        else if(num<guess)
-        {
-            std::cout<<"猜大了"<<std::endl;
-            std::cin>>guess;
-        }
-        else{
-            std::cout<<"对了"<<std::endl;
-            break;
-        }
-    }
+        a++;
+    }while (a<1000);
+    
     return 0;
 }
