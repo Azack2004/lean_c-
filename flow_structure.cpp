@@ -1,75 +1,32 @@
 # include<iostream>
+#include<ctime>
 int main()
-{
-    int a = 1;
-    std::cin>>a;
-    if (a>600)
-    {
-         std::cout<<"大于600"<<std::endl;
-         if(a>700)
-         {
-            std::cout<<"考上700"<<std::endl;
-         }
-         else{
-            std::cout<<"没考到700"<<std::endl;
-         }
+{   int a =0;
+    while (a<10){
+        std::cout <<a<<std::endl;
+        ++a;
     }
-    else if(500<a&&a<600)//没有500<a<600
+    //添加随机数种子
+    srand((unsigned int)time(NULL) );
+    int num = rand()%100+1;
+    int guess = 0;
+    std::cout <<num<<std::endl;
+    while (guess!=num)
     {
-        std::cout << "大于500小于600"<<std::endl;
-    }
-    else{
-        std::cout<<"小于500"<<std::endl;
-    };
-    // if (!a)
-    // {
-    //     std::cout<<a<<std::endl;
-    // }
-    // else {
-    //     std::cout<<a<<std::endl;
-    // };
-
-    int b = 0;
-    int c=0;
-    int d=0;
-    std::cin>>b;
-    std::cin>>c;
-    std::cin>>d;
-
-    if(b>c)
-    {
-        if(b>d){
-            std::cout << "b最大"<<std::endl;
+        if (num>guess)
+        {
+            std::cout<<"猜小了"<<std::endl;
+            std::cin>>guess;
+        }
+        else if(num<guess)
+        {
+            std::cout<<"猜大了"<<std::endl;
+            std::cin>>guess;
         }
         else{
-            std::cout << "d最大"<<std::endl;
+            std::cout<<"对了"<<std::endl;
+            break;
         }
-    }
-    else{
-         if(c>d){
-            std::cout << "c最大"<<std::endl;
-        }
-        else{
-            std::cout << "d最大"<<std::endl;
-        }
-    }
-    int f = b>c ? b:c;
-    std::cout<<f<<std::endl;
-    //在c++中，三目运算符返回的是变量
-    (b>c ? b:c)=100;
-    std::cout<<b<<" ---- "<<c<<std::endl;
-
-    switch (a)
-    {
-    case 600:
-        std::cout <<"a=600"<< std::endl;
-        break;
-    case 500:
-        std::cout << "a=500" << std::endl;
-        break;
-    default:
-        std ::cout << "a不知道多少"<<std::endl;
-        break;
     }
     return 0;
 }
