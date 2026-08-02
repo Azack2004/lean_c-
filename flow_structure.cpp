@@ -2,12 +2,15 @@
 #include<ctime>
 #include<cmath>
 int main()
-{   for(int i=1;i<101;i++)
-    {
-        if(i/10==7||i%10==7||i%7==0)
+{  
+    for(int i = 0;i<10 ;i++)
+    {   
+        for(int j =0;j<10;j++)
         {
-        std::cout << i<<std::endl;
+        std ::cout << " * ";
         }
+        std::cout << std::endl;
+        
     }
     
     return 0;
