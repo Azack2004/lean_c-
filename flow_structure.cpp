@@ -3,22 +3,15 @@
 #include<cmath>
 int main()
 {  
-    for(int j=1;j<10;j++)
-    {
-        for(int i=1; i<=j;i++)
-        {
-            std::cout <<i<<"*"<<j<<"="<<j*i;
-            if(j*i>9){
-                std::cout<<"   ";
-            }
-            else{
-                std::cout<<"    ";
-            }
-            
-        }
-        std::cout <<std::endl;
+   for(int i=0;i<10;i++)
+   {
+    if(i==7){
+        goto FLAG;
     }
-    
+    std::cout<<i<<std::endl;
+   }
+    FLAG:
+    std::cout<<"FLAG HERE"<<std::endl;;
     
     return 0;
 }
