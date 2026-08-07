@@ -1,5 +1,6 @@
 #include<iostream>
-#define MAX 100
+#include <limits>
+#define MAX 2
 struct Person
 {
     std::string m_Name;
@@ -22,3 +23,6 @@ bool addPerson(Addressbooks * aBook,int * person_num);//1.添加联系人
 void showPerson(Addressbooks * aBook,int * person_num);//2.显示联系人
 bool delPerson(Addressbooks * aBook,int * person_num);//3.删除联系人
 int ifPersonExist(Addressbooks * aBook,int * person_num);//4.查找联系人
+void mvPerson(Addressbooks * aBook,int * person_num,int i);//3.删除
+void modifyPersion(Addressbooks * aBook,int i);//5.修改
+void delAll(Addressbooks * aBook,int * person_num);//6.清空

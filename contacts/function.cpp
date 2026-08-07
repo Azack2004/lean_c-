@@ -55,15 +55,14 @@ bool processSelect(int select,Addressbooks * aBook,int * person_num)
         break;
     case 3:
         if(delPerson(aBook,person_num))
-        {   //这里删除。
-            aBook->m_Size--;
-            *person_num-=1;
+        {   
             std::cout<<"删除成功."<<std::endl;
-            show_status(aBook,person_num);
+            //show_status(aBook,person_num);
         }else{
-            show_status(aBook,person_num);
+            //show_status(aBook,person_num);
             std::cout<<"无法删除."<<std::endl;
         }
+        //show_status(aBook,person_num);
         break;
     case 4:
     {
@@ -92,12 +91,26 @@ bool processSelect(int select,Addressbooks * aBook,int * person_num)
             std::cout<<"查无此人。"<<std::endl;
             
         }
+        //show_status(aBook,person_num);
        
         break;
     }
     case 5:
+    {
+        int findStatus = ifPersonExist(aBook,person_num);
+        if(findStatus!=-1)
+        {
+           modifyPersion(aBook, findStatus);
+        }
+        else{
+            std::cout<<"查无此人。"<<std::endl;
+        }
+     
+    }
+        
         break;
     case 6:
+        delAll(aBook,person_num);
         break;
     case 0:
         std::cout << "欢迎下次使用" << std::endl;
@@ -112,6 +125,7 @@ bool processSelect(int select,Addressbooks * aBook,int * person_num)
 bool addPerson(Addressbooks * aBook,int * person_num)
 {   //性别用临时变量
     int sex = 0;
+
     if(aBook->m_Size>=MAX || *person_num >=MAX)
     {
         std::cout<<"已达到通讯录最大值，添加失败。"<<std::endl;
@@ -125,6 +139,16 @@ bool addPerson(Addressbooks * aBook,int * person_num)
     do{
         std::cout<<"性别:1.男 2.女"<<std::endl;
         std::cin >> sex;
+        // 1. 检查输入是否发生了错误（比如输入了字母 'q'）
+        if (std::cin.fail()) {
+            std::cin.clear(); // 修复标志位，让 cin 恢复正常工作
+            // 清空缓冲区里残留的字符，直到遇到换行符 '\n'
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            
+            std::cout << "输入不合法，请输入数字！" << std::endl;
+            sex = 0; // 重置 sex，确保能够继续循环
+            continue;
+        }
         if(sex!=1&&sex!=2)
             {
                 std::cout<<"输入数据不合法。"<<std::endl;
@@ -188,7 +212,9 @@ bool delPerson(Addressbooks * aBook,int * person_num)
             << "住址:"
             << aBook->personArray[findStatus].m_Addr
             << "    "
-            <<std::endl; 
+            <<std::endl;
+        show_status(aBook,person_num);
+        mvPerson(aBook,person_num,findStatus); 
         return true;
     }
     else{
@@ -201,7 +227,7 @@ int ifPersonExist(Addressbooks * aBook,int * person_num)
 {   std::cout<<"输入姓名:"<<std::endl;
     std::string find_name="";
     std::cin>>find_name;
-     for(int i=0;i<*person_num;i++)
+    for(int i=0;i<*person_num;i++)
     {
         if(aBook->personArray[i].m_Name==find_name)
         {
@@ -209,4 +235,50 @@ int ifPersonExist(Addressbooks * aBook,int * person_num)
         }
     }
     return -1;
+}
+void mvPerson(Addressbooks * aBook,int * person_num,int i)
+{   
+    if (*person_num!=1&&*person_num!=0){
+    aBook->personArray[i] = aBook->personArray[*person_num-1];
+    aBook->m_Size-=1;
+    *person_num-=1;
+    }
+    else{
+        *person_num=0;
+        aBook->m_Size=0;
+    }
+}
+void modifyPersion(Addressbooks * aBook,int i)
+{   
+    if(addPerson(aBook,&i))
+    {
+        std::cout<<"修改成功."<<std::endl;
+        std::cout<<"姓名："
+            << aBook->personArray[i].m_Name
+            << "    "
+            << "性别:"
+            << aBook->personArray[i].m_Sex
+            << "    "
+            << "年龄:"
+            << aBook->personArray[i].m_Age
+            << "    "
+            << "电话:"
+            << aBook->personArray[i].m_Phone
+            << "    "
+            << "住址:"
+            << aBook->personArray[i].m_Addr
+            << "    "
+            <<std::endl;
+    
+    }
+    else{
+        std::cout<<"修改失败!"<<std::endl;
+    }
+    
+}
+void delAll(Addressbooks * aBook,int * person_num)
+{
+    aBook->m_Size=0;
+    *person_num=0;
+    std::cout<<"已清空。"<<std::endl;
 }
