@@ -1,17 +1,19 @@
 #include<iostream>
-int sum(int a=0,int b=0,int c=0);
-void func(int =1);
+#include<string>
+int func(int name);
+void func(std::string name);
 int main()
 {
-    std::cout<<sum(1,2)<<std::endl;
-    func();
+    func("nihao");
+    func(10);
     return 0;
 }
-int sum(int a,int b,int c)
+void func(std::string name)
 {
-    return a+b+c;
+    std::cout<<name<<std::endl;
 }
-void func(int)
+int func(int name)
 {
-    std::cout<<sum(1,2)<<std::endl;;
+    std::cout<<name<<std::endl;
+    return 0;
 }
