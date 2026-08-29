@@ -4,6 +4,54 @@
 int main()
 {
     WorkManager wm;
-    wm.Show_Menu();
+   
+    int choice = 0;
+    while(true)
+    {
+         wm.Show_Menu();
+        std::cout<<"输入选择：";
+        std::cin>>choice;
+        switch (choice)
+        {
+        /*
+        std::cout<<"欢迎使用管理系统"<<std::endl;
+        std::cout<<"0.退出管理系统"<<std::endl;
+        std::cout<<"1.增加职工信息"<<std::endl;
+        std::cout<<"2.显示职工信息"<<std::endl;
+        std::cout<<"3.删除离职员工"<<std::endl;
+        std::cout<<"4.修改职工信息"<<std::endl;
+        std::cout<<"5.查找职工信息"<<std::endl;
+        std::cout<<"6.按照编号排序"<<std::endl;
+        std::cout<<"7.清空所有文档"<<std::endl;
+        */
+        case 0:
+            /* code */
+            break;
+        case 1:
+            /* code */
+            break;
+        case 2:
+            /* code */
+            break;
+        case 3:
+            /* code */
+            break;
+        case 4:
+            /* code */
+            break;
+        case 5:
+            /* code */
+            break;
+        case 6:
+            /* code */
+            break;
+        case 7:
+            /* code */
+            break;
+        default:
+            break;
+        }
+    }
+    
     return 0;
 }
