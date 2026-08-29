@@ -16,6 +16,9 @@ void Employee::show_info()
             <<" "
             <<"level:"
             <<level
+            <<" "
+            <<"职位职责:"
+            <<"干活"
             <<std::endl;
 }
 std::string Employee::getLevel()

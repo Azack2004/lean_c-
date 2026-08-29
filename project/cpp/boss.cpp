@@ -15,6 +15,9 @@ void Boss::show_info()
             <<" "
             <<"level:"
             <<level
+            <<" "
+            <<"职位职责:"
+            <<"下命令"
             <<std::endl;
 }
 std::string Boss::getLevel()

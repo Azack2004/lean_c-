@@ -12,9 +12,6 @@ void show_info(Worker * w)
 int main()
 {
     WorkManager wm;
-   Boss b("张健",1 ,1);
-   Employee e("张健",2 ,12002);
-
 
     int choice = 0;
     bool run_state = true;
@@ -41,11 +38,11 @@ int main()
             break;
         case 1:
             /* code */
-            show_info(&b);
+            wm.AddEmp();
             break;
         case 2:
             /* code */
-            show_info(&e);
+            wm.ShowEmp();
             break;
         case 3:
             /* code */

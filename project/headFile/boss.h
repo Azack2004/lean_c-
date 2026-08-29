@@ -1,6 +1,8 @@
+#pragma once
 #include<iostream>
 #include<string>
 #include"worker.h"
+
 class Boss:public Worker
 {
     public:

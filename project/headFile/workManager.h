@@ -1,5 +1,7 @@
 #pragma once //防止头文件重复包含
 #include<iostream>
+#include <limits>
+#include"worker.h"
 /*
 管理类
 负责：
@@ -14,6 +16,11 @@ class WorkManager
 
         void Show_Menu();
         void ExitSystem();
+        void AddEmp();
+        void ShowEmp();
         ~WorkManager();
+
+        int m_EmpNum;//记录员工数量
+        Worker** m_EmpArray;//员工数组指针
 
 };

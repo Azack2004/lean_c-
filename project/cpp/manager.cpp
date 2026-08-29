@@ -15,6 +15,9 @@ void Manager::show_info()
             <<" "
             <<"level:"
             <<level
+            <<" "
+            <<"职位职责:"
+            <<"比上不足比下有余"
             <<std::endl;
 }
 std::string Manager::getLevel()
