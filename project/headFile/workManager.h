@@ -13,7 +13,7 @@ class WorkManager
         WorkManager();
 
         void Show_Menu();
-
+        void ExitSystem();
         ~WorkManager();
 
 };

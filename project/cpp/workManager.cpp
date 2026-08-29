@@ -1,4 +1,5 @@
-#include "workManager.h"
+#include "../headFile/workManager.h"
+
 WorkManager::WorkManager()
 {
 
@@ -16,6 +17,11 @@ void WorkManager::Show_Menu()
     std::cout<<"6.按照编号排序"<<std::endl;
     std::cout<<"7.清空所有文档"<<std::endl;
     std::cout<<"***********"<<std::endl;
+}
+void WorkManager::ExitSystem()
+{
+    std::cout<<"欢迎下次使用！"<<std::endl;
+    exit(0);//退出程序函数，系统自带
 }
 WorkManager::~WorkManager()
 {

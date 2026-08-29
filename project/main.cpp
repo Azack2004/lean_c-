@@ -1,12 +1,24 @@
 #include<iostream>
+#include"headFile/worker.h"//抽象类
+#include"headFile/workManager.h"//界面
+#include"headFile/boss.h"
+#include"headFile/employee.h"
+#include"headFile/manager.h"
+void show_info(Worker * w)
+{
+    w->show_info();
+}
 
-#include"workManager.h"
 int main()
 {
     WorkManager wm;
-   
+   Boss b("张健",1 ,1);
+   Employee e("张健",2 ,12002);
+
+
     int choice = 0;
-    while(true)
+    bool run_state = true;
+    while(run_state)
     {
          wm.Show_Menu();
         std::cout<<"输入选择：";
@@ -25,13 +37,15 @@ int main()
         std::cout<<"7.清空所有文档"<<std::endl;
         */
         case 0:
-            /* code */
+            wm.ExitSystem();
             break;
         case 1:
             /* code */
+            show_info(&b);
             break;
         case 2:
             /* code */
+            show_info(&e);
             break;
         case 3:
             /* code */
@@ -49,6 +63,7 @@ int main()
             /* code */
             break;
         default:
+            std::cout<<"请输入合法的数字"<<std::endl;
             break;
         }
     }
