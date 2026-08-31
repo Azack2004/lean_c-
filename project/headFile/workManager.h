@@ -1,7 +1,10 @@
 #pragma once //防止头文件重复包含
 #include<iostream>
 #include <limits>
+#include<fstream>
+#include <cstring>
 #include"worker.h"
+#define FileName "EmpFile.txt"
 /*
 管理类
 负责：
@@ -9,6 +12,7 @@
 2.与职工的增删改查
 3.与文件的读写
 */
+
 class WorkManager
 {
     public:
@@ -18,6 +22,9 @@ class WorkManager
         void ExitSystem();
         void AddEmp();
         void ShowEmp();
+        void Save();
+        void GetFile();
+        
         ~WorkManager();
 
         int m_EmpNum;//记录员工数量

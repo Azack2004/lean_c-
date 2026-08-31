@@ -15,9 +15,11 @@ int main()
 
     int choice = 0;
     bool run_state = true;
+    wm.GetFile();
     while(run_state)
     {
          wm.Show_Menu();
+       
         std::cout<<"输入选择：";
         std::cin>>choice;
         switch (choice)
@@ -34,14 +36,17 @@ int main()
         std::cout<<"7.清空所有文档"<<std::endl;
         */
         case 0:
-            wm.ExitSystem();
+            wm.ExitSystem();   
             break;
         case 1:
             /* code */
             wm.AddEmp();
+            wm.Save();
+            
             break;
         case 2:
             /* code */
+           
             wm.ShowEmp();
             break;
         case 3:

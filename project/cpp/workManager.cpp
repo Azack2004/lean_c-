@@ -1,3 +1,4 @@
+
 #include "../headFile/workManager.h"
 #include "../headFile/boss.h"
 #include "../headFile/manager.h"
@@ -6,6 +7,28 @@ WorkManager::WorkManager()
 {
     this->m_EmpNum = 0;
     this->m_EmpArray =nullptr;
+}
+WorkManager::~WorkManager()
+{
+  if (this->m_EmpArray != nullptr)
+    {
+        for (int i = 0; i < this->m_EmpNum; i++)
+
+        {
+            delete this->m_EmpArray[i];
+            this->m_EmpArray[i] = nullptr;
+        }
+        delete[] this->m_EmpArray;
+        this->m_EmpArray = nullptr;
+    }
+    this->m_EmpNum = 0;
+}
+void WorkManager::ShowEmp()
+{
+    for(int i=0;i<this->m_EmpNum;i++)
+    {
+       this->m_EmpArray[i]->show_info();
+    }
 }
 void WorkManager::Show_Menu()
 {
@@ -31,12 +54,24 @@ void WorkManager::AddEmp()
     int add_num=0;
     std::cout<<"增加员工数量：";
     std::cin>>add_num;
-    if(add_num<0)
-    {
-        std::cout<<"请输入合法数字。";
-        return ;
+    bool add_numStatus = true;
+    while(add_numStatus)
+    {   
+        if(add_num>0)
+        {
+            add_numStatus=false;
+        } 
+        else {
+            if (std::cin.fail()) {
+                std::cin.clear(); // 修复标志位，让 cin 恢复正常工作
+                }
+                // 清空缓冲区里残留的字符，直到遇到换行符 '\n'
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout<<"输入合法的数字."<<std::endl;
+            std::cout<<"增加员工数量：";
+            std::cin>>add_num;
+        } 
     }
-
     //添加逻辑
     int newSize = this->m_EmpNum+add_num;
     //开辟空间
@@ -47,7 +82,7 @@ void WorkManager::AddEmp()
         {
             newSpace[i]=this->m_EmpArray[i];
         }
-        delete this->m_EmpArray;
+        delete[] this->m_EmpArray;//释放原有空间
         this->m_EmpArray = nullptr;
     }
     //加入新数据
@@ -61,12 +96,10 @@ void WorkManager::AddEmp()
         std::cin>>name;
         std::cout<<"id:";
         std::cin>>id;
-    
-
         Worker* w = nullptr;
         bool levelStatus = true;
         while (levelStatus)
-        {   std::cout<<std::endl<<"1.老板 "<<"2.经理 "<<"3.员工 "<<std::endl<<"level:";
+        {   std::cout<<"1.老板 "<<"2.经理 "<<"3.员工 "<<std::endl<<"level:";
             std::cin>>level;
             switch (level)
             {
@@ -101,20 +134,93 @@ void WorkManager::AddEmp()
             }
         }
         newSpace[this->m_EmpNum+i]=w;
+       
         
     }
    this->m_EmpArray = newSpace;  
-   this->m_EmpNum = newSize;  
+   this->m_EmpNum = newSize;
+   std::cout<<"添加成功。"<<std::endl;  
 }
-void WorkManager::ShowEmp()
+void WorkManager::Save()
 {
-    for(int i=0;i<this->m_EmpNum;i++)
+    std::ofstream ofs;
+    ofs.open(FileName,std::ios::out);
+    
+    for(int i = 0;i<this->m_EmpNum;i++)
     {
-       this->m_EmpArray[i]->show_info();
+       
+        ofs<<this->m_EmpArray[i]->name<<"*"
+        <<this->m_EmpArray[i]->id<<"%"
+        <<this->m_EmpArray[i]->level<<'\n';
     }
+    std::cout<<"写入完成."<<std::endl;
+    ofs.close();
 }
-WorkManager::~WorkManager()
+void WorkManager::GetFile()
 {
+    std::ifstream ifs;
+    ifs.open(FileName, std::ios::in);
+    std::string b;
+    int g=0;
+    int count = 0;//文件有多少行
+    if (!ifs.is_open())
+    {
+        std::cout << "文件打开失败，请重试。" << std::endl;
+        return;
+    }
+    while (ifs >> b)
+    {
+        count++;
+    }
+     // 文件为空
+    if (count == 0)
+    {
+        ifs.close();
 
+        this->m_EmpNum = 0;
+
+        this->m_EmpArray = nullptr;
+
+        return;
+    }
+    //回到文件开头
+    ifs.clear();
+    ifs.seekg(0, std::ios::beg);    
+    this->m_EmpArray = new Worker*[count];
+    while (ifs >> b)
+    {
+        int id = 0;
+        int level = 0;
+        
+        // 找 *
+        size_t pos1 = b.find('*');
+
+        // 找 %
+        size_t pos2 = b.find('%');
+
+        // 获取名字
+        std::string name = b.substr(0, pos1);
+
+        // 获取 id
+        id = b[pos1 + 1] - '0';
+
+        // 获取 level
+        level = b[pos2 + 1] - '0';
+        if(level == 1)
+        
+            m_EmpArray[g] = new Boss(name,id,level);
+
+        if(level == 2)
+            m_EmpArray[g] = new Manager(name,id,level);
+
+        if(level == 3)
+            m_EmpArray[g] = new Employee(name,id,level);
+
+        g++;
+    }
+
+    this->m_EmpNum = count;
+
+    ifs.close();
 }
 
