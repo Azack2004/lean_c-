@@ -5,8 +5,13 @@
 #include "../headFile/employee.h"
 WorkManager::WorkManager()
 {
+    
     this->m_EmpNum = 0;
     this->m_EmpArray =nullptr;
+}
+void WorkManager::GetStatus()
+{
+    std::cout<<"m_EmpNum"<<this->m_EmpNum<<std::endl;
 }
 WorkManager::~WorkManager()
 {
@@ -24,10 +29,16 @@ WorkManager::~WorkManager()
     this->m_EmpNum = 0;
 }
 void WorkManager::ShowEmp()
-{
-    for(int i=0;i<this->m_EmpNum;i++)
+{   
+    if(this->m_EmpNum!=0)
     {
-       this->m_EmpArray[i]->show_info();
+    for(int i=0;i<this->m_EmpNum;i++)
+        {
+        this->m_EmpArray[i]->show_info();
+        }
+    }
+    else{
+        std::cout<<"无职工"<<std::endl;
     }
 }
 void WorkManager::Show_Menu()
@@ -134,8 +145,6 @@ void WorkManager::AddEmp()
             }
         }
         newSpace[this->m_EmpNum+i]=w;
-       
-        
     }
    this->m_EmpArray = newSpace;  
    this->m_EmpNum = newSize;
@@ -143,6 +152,7 @@ void WorkManager::AddEmp()
 }
 void WorkManager::Save()
 {
+    
     std::ofstream ofs;
     ofs.open(FileName,std::ios::out);
     
@@ -223,4 +233,136 @@ void WorkManager::GetFile()
 
     ifs.close();
 }
+void WorkManager::DelEmp()
+{ 
+    int id = this->FindEmp();
+    if(id==-1)
+    {
+        return ;
+    }
+    if(this->m_EmpNum==1)
+    {
+        if (this->m_EmpArray != nullptr)
+        {
+            delete this->m_EmpArray[0];
+            this->m_EmpArray[0] = nullptr;
+        }
+        this->m_EmpNum = 0;
+    }
+    else if(id==this->m_EmpNum){
+        this->m_EmpNum -=1;
+    }
+    else{
+        this->m_EmpNum-=1;
+        for(int i = id;i<this->m_EmpNum;i++)
+        {
+            this->m_EmpArray[i] =this->m_EmpArray[i+1]; 
+        }
+        delete this->m_EmpArray[this->m_EmpNum+1];
+        this->m_EmpArray[this->m_EmpNum+1]=nullptr;
+    }
 
+    
+}
+int WorkManager::FindEmp()
+{
+    int findId = 0;
+    std::cout<<"输入id:";
+    std::cin>>findId;
+    for(int i=0 ;i<this->m_EmpNum;i++)
+    {
+        if(this->m_EmpArray[i]->id==findId)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+void WorkManager::ModifyEmp()
+{
+    int id = this->FindEmp();
+    if(id==-1)
+    {
+        return ;
+    }
+
+    Worker* w = nullptr;
+    std::string name;
+    int mid;
+    int level;
+    std::cout<<"姓名：";
+    std::cin>>name;
+    std::cout<<"id:";
+    std::cin>>mid;
+    bool levelStatus = true;
+    while (levelStatus)
+    {   std::cout<<"1.老板 "<<"2.经理 "<<"3.员工 "<<std::endl<<"level:";
+        std::cin>>level;
+        switch (level)
+            {
+            case 1:
+                {
+                w = new Boss(name,id,level); 
+                levelStatus = false; 
+                break;
+                }
+            case 2:
+                {
+                w = new Manager(name,id,level); 
+                levelStatus = false; 
+                break;
+                }   
+            case 3:
+                {
+                w = new Employee(name,id,level); 
+                levelStatus = false; 
+                break;
+                }   
+            
+            default:
+                if (std::cin.fail()) {
+                std::cin.clear(); // 修复标志位，让 cin 恢复正常工作
+                }
+                // 清空缓冲区里残留的字符，直到遇到换行符 '\n'
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout<<"输入合法的数字."<<std::endl;
+                
+                break;
+            }
+        }
+    std::cout<<"已修改"<<std::endl;  
+    this->m_EmpArray[id]=w;
+    this->m_EmpArray[id]->show_info();
+}
+void WorkManager::SortEmp()
+{
+    Worker* w = nullptr;
+    for(int i=0;i<this->m_EmpNum;i++)
+    {   
+        for(int j=0;j<this->m_EmpNum-i-1;j++)
+        {
+            if(this->m_EmpArray[j]->id>this->m_EmpArray[j+1]->id)
+            {
+                w = this->m_EmpArray[j];
+                this->m_EmpArray[j]=this->m_EmpArray[j+1];
+                this->m_EmpArray[j+1]=w;
+            }
+        }
+       
+    }
+    this->ShowEmp();
+}
+void WorkManager::ClearEmp()
+{
+    if(this->m_EmpArray!=nullptr)
+    {
+        for(int i=0;i<this->m_EmpNum;i++)
+        {
+            delete this->m_EmpArray[i];
+            this->m_EmpArray[i]=nullptr;
+        }
+        delete[] this->m_EmpArray;
+        this->m_EmpArray=nullptr;
+    }
+    this->m_EmpNum=0;
+}

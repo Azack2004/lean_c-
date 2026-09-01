@@ -9,7 +9,6 @@ class Worker
         int level;
 
         virtual void show_info()=0;
-        virtual std::string getLevel()=0;
-
+       
 };
 

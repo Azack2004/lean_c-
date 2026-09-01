@@ -8,5 +8,5 @@ class Boss:public Worker
     public:
         Boss(std::string name,int id,int level);
         void show_info() override;
-        std::string getLevel()override ;
+        
 };

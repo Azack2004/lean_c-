@@ -20,7 +20,3 @@ void Boss::show_info()
             <<"下命令"
             <<std::endl;
 }
-std::string Boss::getLevel()
-        {
-            return "老板";
-        }

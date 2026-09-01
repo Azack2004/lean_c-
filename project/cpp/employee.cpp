@@ -21,7 +21,3 @@ void Employee::show_info()
             <<"干活"
             <<std::endl;
 }
-std::string Employee::getLevel()
-        {
-            return "员工";
-        }

@@ -46,23 +46,36 @@ int main()
             break;
         case 2:
             /* code */
-           
             wm.ShowEmp();
             break;
         case 3:
-            /* code */
+            wm.DelEmp();
+            wm.Save();
             break;
         case 4:
-            /* code */
+            wm.ModifyEmp();
+            wm.Save();
             break;
         case 5:
-            /* code */
-            break;
+            {
+                int res = wm.FindEmp();
+                if(res==-1)
+                {
+                    std::cout<<"查无此人"<<std::endl;
+                }
+                else{
+                    wm.m_EmpArray[res]->show_info();
+                }
+                break;
+            }
+            
         case 6:
-            /* code */
+            wm.SortEmp();
+            wm.Save();
             break;
         case 7:
-            /* code */
+            wm.ClearEmp();
+            wm.Save();
             break;
         default:
             std::cout<<"请输入合法的数字"<<std::endl;

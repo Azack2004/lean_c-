@@ -20,7 +20,3 @@ void Manager::show_info()
             <<"比上不足比下有余"
             <<std::endl;
 }
-std::string Manager::getLevel()
-        {
-            return "经理";
-        }

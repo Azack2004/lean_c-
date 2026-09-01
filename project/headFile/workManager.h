@@ -24,7 +24,12 @@ class WorkManager
         void ShowEmp();
         void Save();
         void GetFile();
-        
+        void GetStatus();
+        int FindEmp();
+        void DelEmp();
+        void ModifyEmp();
+        void SortEmp();
+        void ClearEmp();
         ~WorkManager();
 
         int m_EmpNum;//记录员工数量
