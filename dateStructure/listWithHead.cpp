@@ -50,6 +50,25 @@ void ShowAll(LNode*& L)
     }
     std::cout<<std::endl;
 }
+bool InsertNode(LNode*&L ,const int&i ,const int &a)
+{
+    LNode*p = L;
+    int j=1;
+    while(p->next!=nullptr&&j<i)
+    {
+        p=p->next;
+        j++;
+    }
+    LNode* insertp = new LNode();
+    if(insertp==nullptr)
+    {
+        return false;
+    }
+    insertp->data = a;
+    insertp->next = p->next;
+    p->next=insertp;
+    return true;
+}
 int main()
 {
     LNode *l;
@@ -57,6 +76,8 @@ int main()
     std::cout<<IsEmpty(l)<<std::endl;
     std::cout<<AddNode(l,100)<<std::endl;
     std::cout<<AddNode(l,10)<<std::endl;
+    ShowAll(l);
+    std::cout<<InsertNode(l,1,2)<<std::endl;
     ShowAll(l);
     return 0;
 }
