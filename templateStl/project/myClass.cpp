@@ -10,7 +10,8 @@ class MyList
     public:
         MyList(const int &max)
         {   
-            len = 0;
+            this->len = 0;
+            this->max = max;
             try
             {
                 L = new T[max];
@@ -79,6 +80,10 @@ class MyList
             {
                 return false;
             }
+            if(this->len==this->max)
+            {
+                return false;
+            }
             L[len]=t;
             len++;
             return true;
@@ -135,17 +140,37 @@ class MyList
 };
 class MyInt
 {
+    
     private:
         int a;
+    public:
+        MyInt(){
+            a =0;
+        }
         MyInt(int b):a(b){}
-        void show()
+        int show() const
         {
-            std::cout<<a<<std::endl;
+            return a;
         }
 };
+//重载左移运算符
+std::ostream & operator<<(std::ostream & c,const MyInt & a)
+{
+    std::cout<<a.show();
+    return c;
+}
 
 int main()
 {
-    
+    MyList<MyInt> m(10);
+    MyInt a(1);
+    MyInt b(2);
+    m.add(a);
+    m.add(b);
+    m.showAll();
+    MyList<int> c(1);
+    c.add(1);
+    std::cout<<c.add(10)<<std::endl;
+    c.showAll();
     return 0;
 }
