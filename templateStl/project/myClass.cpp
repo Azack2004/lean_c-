@@ -14,7 +14,7 @@ class MyList
             this->max = max;
             try
             {
-                L = new T[max];
+                this->L = new T[max];
             }          
             catch(const std::bad_alloc& e)
             {
@@ -49,30 +49,46 @@ class MyList
                     this->L[i]=m.L[i];
                 }
                 this->len = m.len;
+                this->max = m.max;
 
             }   
         }
-        void operator=(const MyList& m)
+        MyList& operator=(const MyList& m)
         {
+            T * newL = nullptr;
+            if(this==&m)
+            {
+                return *this ;
+            }
+           
             try
             {
-                this->L = new T[m.max];
+                newL = new T[m.max];
             }          
             catch(const std::bad_alloc& e)
             {
                 std::cout<<"申请内存失败:"<<e.what()<<std::endl;
-                this->L = nullptr;
+                
             }
 
-            if(this->L!=nullptr)
+            if(newL!=nullptr)
             {
+             
                 for(int i=0;i<m.len;i++)
                 {
-                    this->L[i]=m.L[i];
+                    newL[i]=m.L[i];
                 }
+                delete[] this->L;
                 this->len = m.len;
-
+                this->max=m.max;//加上状态变量 
+                this->L = newL;
+                
             } 
+            return *this;
+        }
+        T& operator=(T& t)
+        {
+            return t;
         }
         bool add(const T& t)
         {
@@ -102,7 +118,7 @@ class MyList
             value= this->L[len];
             return true;
         }
-        T operator[](const int & i)
+        T& operator[](const int & i)
         {
            
             if (this->L == nullptr)
@@ -172,5 +188,13 @@ int main()
     c.add(1);
     std::cout<<c.add(10)<<std::endl;
     c.showAll();
+    MyList<MyInt> d(11);
+    MyList<MyInt> g(1);
+    d = g = m;
+    d.showAll();
+    g.showAll();
+    std::cout<<d.getMax()<<std::endl;
+    g[1] = MyInt(10);
+    g.showAll();
     return 0;
 }
