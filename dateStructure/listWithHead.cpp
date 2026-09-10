@@ -69,6 +69,20 @@ bool InsertNode(LNode*&L ,const int&i ,const int &a)
     p->next=insertp;
     return true;
 }
+LNode* reverse(LNode* & L)
+{
+    LNode * prev = nullptr;
+    LNode * next_node = nullptr;
+    LNode * curr = L->next;
+    while(curr)
+    {
+        next_node = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next_node;
+    }
+    return prev;
+}
 int main()
 {
     LNode *l;
@@ -78,6 +92,7 @@ int main()
     std::cout<<AddNode(l,10)<<std::endl;
     ShowAll(l);
     std::cout<<InsertNode(l,1,2)<<std::endl;
+    l =reverse(l);
     ShowAll(l);
     return 0;
 }
