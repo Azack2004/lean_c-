@@ -24,6 +24,14 @@ int main()
         std::cout<<*it<<" ";
     }
     std::cout<<std::endl;
-
+    std::logical_not<int> ln;
+    std::cout<<ln(100)<<std::endl;
+    std::vector<int> v2(v.size());
+    v2.reserve(v.size());
+    std::transform(v.begin(),v.end(),v2.begin(),ln);
+    for(auto it = v2.begin();it!=v2.end();it++)
+    {
+        std::cout<<*it<<" ";
+    }
     return 0;
 }
