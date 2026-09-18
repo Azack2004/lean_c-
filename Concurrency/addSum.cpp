@@ -15,27 +15,36 @@ int main()
 {
     std::vector<int> v;
     std::vector<std::thread> vt;
-   
     int numt = std::thread::hardware_concurrency();
-  
-    std::vector<long long> sumv(numt);
-    for(int a=0;a<40000000;a++)
+    vt.reserve(numt);
+    int max_datasize = 40000000;
+    for(int a=0;a<max_datasize;a++)
     {
         v.push_back(a);
     }
     accumulate_block<std::vector<int>::iterator,long long> add;
     int num = std::distance(v.begin(),v.end());
-    int max_acculate = 1000;
-    for(int i=0;i<numt;i++)
+    std::vector<long long> sumv(numt,0);
+    
+    // for(int i=0;i<numt;i++)
+    // {
+    //     // std::thread t(add,v.begin()+i*100000,v.begin()+(i+1)*100000,std::ref(sumv[i]));//显视按照引用传递
+    //     // vt.push_back(std::move(t));//这里是复制
+    //     vt.emplace_back(add,v.begin()+i*(num/numt),v.begin()+(i+1)*(num/numt),std::ref(sumv[i]));//vector内部构造
+    // }
+ 
+    for(int i =0;i<numt;i++)
     {
-        // std::thread t(add,v.begin()+i*100000,v.begin()+(i+1)*100000,std::ref(sumv[i]));//显视按照引用传递
-        // vt.push_back(std::move(t));//这里是复制
         vt.emplace_back(add,v.begin()+i*(num/numt),v.begin()+(i+1)*(num/numt),std::ref(sumv[i]));//vector内部构造
+ 
     }
-    for(auto it =vt.begin();it!=vt.end();it++ )
+    for(auto& t : vt)
     {
-        it->join();
+        std::cout<<t.get_id()<<std::endl;
+        t.join();
     }
+    std::thread::id  main_id = std::this_thread::get_id();
+    std::cout<<main_id<<std::endl;
     long long sum = 0;
     sum = std::accumulate(sumv.begin(),sumv.end(),sum);
     std::cout<<sum<<std::endl;
