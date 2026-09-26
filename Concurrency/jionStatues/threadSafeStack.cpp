@@ -9,7 +9,7 @@ class ThreadSafeStack
 {
     private:    
         std::stack<T> s;
-        std::mutex mtx;
+        mutable std::mutex mtx;
         std::condition_variable cv;
     public:
         explicit ThreadSafeStack()=default;
