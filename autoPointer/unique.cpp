@@ -18,6 +18,7 @@ class Resource
         {
             std::unique_ptr<Resource> upr(new Resource(a,s));
             std::cout<<"upr地址:"<<&upr<<std::endl;
+        
             return upr;
         }
         void processResource(std::unique_ptr<Resource> upr)
@@ -33,6 +34,7 @@ int main()
     auto p = r.createResource(10,"path");
     std::cout<<"p地址:"<<&p<<std::endl;
     r.processResource(std::move(p));//右值触发移动构造
+    
 
     return 0;
 }
